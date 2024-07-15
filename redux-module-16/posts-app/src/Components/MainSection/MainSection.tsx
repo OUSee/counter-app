@@ -2,23 +2,32 @@ import { useEffect, useState } from "react"
 import { ModalWindow } from "../modalWindwo/ModalWindow"
 import styles from "./styles.module.css"
 import { UserCard } from "../Card/Card"
+import { useDispatch } from "react-redux"
+import { getPostsStart, getPostsSuccess } from "../../Redux/posts/actions"
+import { store } from "../../Redux/store"
 
 const RESOURCE = "https://jsonplaceholder.typicode.com/posts"
 
 
 export const MainSection = () => {
-    const [posts, setPosts] = useState<Post[]>([])
     const [users, setUsers] = useState<User[]>([])
     const [currentUser, setCurrentUser] = useState<User>()
     const [isOpen, setIsOpen] = useState(false)
 
-    useEffect(() => {
-        getData();
-    }, [])
     
+
     useEffect(() => {
-        console.log("users", users)
-    },users)
+        getData()
+    }, [])
+
+    useEffect(() => {
+        getUsers(store.getState())
+    }, [store])
+
+    
+
+    const put = useDispatch()
+
 
     const getData = async () => {
         try {
@@ -27,33 +36,18 @@ export const MainSection = () => {
                 throw new Error("err response status: " + r.status)
             }
             else {
-                const data = await r.json()
-                console.log("data", data)
-                setPosts(data)
+                const data: Post[] = await r.json()
+
+                put(getPostsSuccess(data))
             }
         }
         catch {
-            const r = await fetch(RESOURCE);
-            const json = r.json();
-            const data = JSON.parse( await json);
-            console.log(`error try/catch failed: ${r.status}`)
-            console.log(data)
+            console.log(`error try/catch failed`)
         }
-        getUsers(posts)
     }
-
-    // const getUsers = () => {
-    //     posts.forEach(post => {
-    //         users.forEach(user => {
-
-    //         })
-    //     })
-    // }
     
-    const getUsers = (posts: Post[]): User[] => {
+    const getUsers = async (posts: Post[]) => {
         const userMap: User[]  = [];
-
-        // Создаем объекты пользователей и мапу для быстрого доступа
         posts.forEach((post) => {
             if (!userMap[Number(post.userId)]) {
                 userMap[Number(post.userId)] =
@@ -68,10 +62,7 @@ export const MainSection = () => {
             }
         });
         setUsers(userMap)
-
-
-        // Возвращаем массив объектов пользователей
-        return Object.values(userMap);
+        setCurrentUser(users[users.length])
     }
             
 

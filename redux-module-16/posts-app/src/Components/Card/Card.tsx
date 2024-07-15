@@ -20,7 +20,7 @@ export const UserCard = ({ user, setCurrentUser = NOOP, setIsOpen }: iCard) => {
     return (
         <div className={styles.cardContainer} onClick={handleClick}>
             <div className={styles.userPic}>
-                <UserIcon/>
+                <UserIcon width="70px" height="70px"/>
             </div>
             <div className={styles.userDetails}>
                 <h3 className={styles.userId}>User ID: {user.userId}</h3>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "./styles.module.css";
 
 export const Head = () => {
-  const [inputText, setInputText] = useState("Counter");
+  const [inputText, setInputText] = useState("Posts");
   const [currentColor, setCurrentColor] = useState("#222222");
 
   const ChangeColorActive = () => {
@@ -35,9 +35,9 @@ export const Head = () => {
         </svg>
         <p className={style.tooltiptext}>
           <span className={style.tooltipWelcome}>
-            This is a quick guide how to Count!
+            This is a quick guide how to {inputText}!
           </span>
-          <p>Just click `+` or `-` to add or subtact 1, or click numbers to console.log counter object</p>
+          <p>Just click user to wiew its posts, click close or outside to close modal window</p>
           <span>Enjoy!</span>
         </p>
       </div>

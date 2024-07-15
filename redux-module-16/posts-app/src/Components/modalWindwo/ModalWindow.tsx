@@ -23,10 +23,10 @@ export const ModalWindow = ({currentUser, isOpen, setIsOpen}: IUser) => {
         return ReactDOM.createPortal((
             <div className={styles.modalWindowContainer}>
                 <button className={styles.closeButton} onClick={handleClick}>
-                    <CloseIcon/>
+                    <CloseIcon width="35px" height="35px"/>
                 </button>
                 <div className={styles.userInfo}>
-                    <UserIcon />
+                    <UserIcon width="70px" height="70px"/>
                     <div className={styles.userId}>User ID: { currentUser.userId}</div>
                 </div>
                 <div id="userPostsContainer" className={styles.postsContainer}>
